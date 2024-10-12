@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block content %}
+<form action="">
+    <nav class="navbar">
+        <div class="navbar-title">OnlineClinic</div>
+        <div class="navbar-menu">
+            <a href="{% url 'home' %}" class="btn btn-info">Home</a>
+            <a href="#" class="btn btn-info">Dashboard</a>
+            <a href="#" class="btn btn-info">Medication</a>
+            <a href="#" class="btn btn-info">Cart</a>
+        </div>
+        <div class="navbar-profile">
+            <div class="dropdown">
+                <button class="dropbtn">Profile</button>
+                <div class="dropdown-content">
+                    <a href="#">View Profile</a>
+                    <a href="#">Settings</a>
+                    <a href="#">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section id="home">
+            <h2>Available Medications</h2>
+            <div class="datas">
+                <div class="data">
+                    <h3>Panadol</h3>
+                    <p>Description: Antihistamine medication.</p>
+                    <img src="{% static 'panadol.jpeg' %}" alt="">
+                    <p>Price: $12.99</p>
+                    <p>Available: <span class="availability">Out of Stock</span></p>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+                <div class="data" data-name="Aspirin" data-price="5.99" data-availability="true">
+                    <h3>Aspirin</h3>
+                    <p>Description: Pain relief medication.</p>
+                    <img src="{% static 'panadol.jpeg' %}" alt="">
+                    <p>Price: $5.99</p>
+                    <p>Available: <span class="availability">In Stock</span></p>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+            <div class="data" data-name="Ibuprofen" data-price="7.99" data-availability="true">
+                <h3>Ibuprofen</h3>
+                <p>Description: Anti-inflammatory pain reliever.</p>
+                <img src="{% static 'panadol.jpeg' %}" alt="">
+                <p>Price: $7.99</p>
+                <p>Available: <span class="availability">In Stock</span></p>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            <div class="data" data-name="Amoxicillin" data-price="9.99" data-availability="false">
+                <h3>Amoxicillin</h3>
+                <p>Description: Antibiotic medication.</p>
+                <img src="{% static 'panadol.jpeg' %}" alt="">
+                <p>Price: $9.99</p>
+                <p>Available: <span class="availability">Out of Stock</span></p>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+        </div>
+        </section>
+
+        <section id="cart-section">
+            <h2>Your Cart</h2>
+            <div id="cart-items"></div>
+            <p id="total-price">Total: $0.00</p>
+        </section>
+
+        <section id="appointments-section">
+            <h2>Doctor's Appointments</h2>
+            <div class="appointment">
+                <p>Appointment with Dr. Smith on October 15, 2024, at 10:00 AM</p>
+            </div>
+            <div class="appointment">
+                <p>Appointment with Dr. Jones on October 20, 2024, at 2:30 PM</p>
+            </div>
+        </section>
+    </main>
+</form>
+{% endblock %}
