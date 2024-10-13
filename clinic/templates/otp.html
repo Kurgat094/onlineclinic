@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Otp
+{% endblock %}  
+
+{% block content %}
+<form action="" method="post">
+    <div class="container">
+        <div class="signup">
+            <div class="card">
+                <h2>Enter otp</h2>
+                {% csrf_token %}
+                <input type="text" name="otp" placeholder="Enter your One Time Password" id="">
+                <input type="Submit" value="Verify" id="button" class="btn btn-success">
+                <a href="">Resend Link</a>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock %}

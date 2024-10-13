@@ -7,7 +7,7 @@
 }
 .card
 {
-    background-image: linear-gradient(rgb(194, 10, 117),rgba(0,0,0,0.9),rgba(11, 8, 199, 0.9));
+    background-image: linear-gradient(rgb(10, 194, 41),rgba(0,0,0,0.9),rgba(11, 8, 199, 0.9));
     color: aqua;
     align-items: center;
     justify-content: center;
@@ -209,3 +209,10 @@ section {
     }
 }
     
+.field-icon {
+    float: right;
+    margin-left: -25px;
+    margin-top: -25px;
+    position: relative;
+    z-index: 2;
+  }

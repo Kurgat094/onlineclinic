@@ -5,4 +5,9 @@ urlpatterns = [
     path('',home,name="home"),
     path("signin/",signin,name="signin"),
     path("signup/",signup,name="signup"),
+    path("otp/",otp,name="otp"),
+    path('signout/',signout,name="signout"),
+    path('forgotpassword',forgotpassword,name="forgotpassword"),
+    path('resetpassword',resetpassword,name="resetpassword"),
+    path('resetpassword/<uidb64>/<token>/', resetpassword, name='resetpassword'),
 ]
