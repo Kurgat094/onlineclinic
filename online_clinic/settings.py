@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "clinic",
+     'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -113,6 +114,11 @@ USE_I18N = True
 
 USE_TZ = True
 
+
+
+# Add MEDIA settings
+MEDIA_URL = '/media/'  # This is the URL prefix for media files
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # This is where uploaded media files will be stored
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/

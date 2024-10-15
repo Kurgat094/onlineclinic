@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Upload Medication
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="cards shadow p-4">
+        <h2 class="text-center mb-4">Upload Medication</h2>
+        <form action="" method="post" enctype="multipart/form-data">
+            <div class="form-group mb-3">
+                {% csrf_token %}
+                <label for="medicine_name" class="form-label">{{ form.medicine_name.label }}</label>
+                {{ form.medicine_name }}
+            </div>
+            <div class="form-group mb-3">
+                <label for="medicine_image" class="form-label">{{ form.medicine_image.label }}</label>
+                {{ form.medicine_image }}
+            </div>
+            <div class="form-group mb-3">
+                <label for="medicine_price" class="form-label">{{ form.medicine_price.label }}</label>
+                {{ form.medicine_price }}
+            </div>
+            <div class="form-group mb-3">
+                <label for="medicine_description" class="form-label">{{ form.medicine_description.label }}</label>
+                {{ form.medicine_description }}
+            </div>
+            <div class="d-grid gap-2">
+                <input type="submit" value="Upload" id="button" class="btn btn-success">
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

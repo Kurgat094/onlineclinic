@@ -16,3 +16,9 @@ class OtpForm(forms.ModelForm):
     class Meta:
         model=Otp
         fields=['otp','is_verified']
+        
+        
+class UploadForm(forms.ModelForm):
+    class Meta:
+        model=Upload
+        fields=['medicine_name','medicine_image','medicine_price','medicine_description']

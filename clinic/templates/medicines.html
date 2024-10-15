@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Medicines
+{% endblock %}
+
+{% block content %}
+<form action="" method="post" enctype="multipart/form-data">
+    <div class="container">
+            <div class="datas">
+                {% for medicine in  medicines %}
+                <div class="data">
+                    <h3>{{ medicine.medicine_name }}</h3>
+                    <p>Description: {{ medicine.medicine_description }}</p>
+                    <img src="{{ medicine.image_url}}" alt="{{medicine_image.label}}">
+                    <p>Price: {{ medicine.medicine_price }}</p>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock %} 

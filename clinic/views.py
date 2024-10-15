@@ -3,13 +3,13 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User ,Group
 from django.contrib.auth.tokens import default_token_generator as token_generator
-from .forms import CreateUser,OtpForm
+from .forms import CreateUser,OtpForm,UploadForm
 from django.utils import encoding
 from django.utils.http import urlsafe_base64_encode,urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.contrib.auth.forms import AuthenticationForm
 from django.core.mail import send_mail
-from .models import Otp
+from .models import Otp,Upload
 from django.contrib import messages
 import random,logging
 from django.utils import timezone
@@ -90,7 +90,7 @@ def forgotpassword(request):
     if  request.method == 'POST':
         email=request.POST.get('email')
         try:
-            user=User.objects.get(email=email)
+            user=User.objects.get(email='email')
         except User.DoesNotExist:
             messages.error(request,"User does not exist")
             return redirect('forgotpassword')
@@ -159,3 +159,26 @@ def signout(request):
 
 def home(request):
     return render(request,"home.html")
+
+
+def upload(request):
+    form=UploadForm
+    if request.method=="POST":
+        form=UploadForm(request.POST,request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('medicines')
+    return render(request,"upload_medicine.html",{'form': form})
+
+def medicines(request):
+    medicines=Upload.objects.all()
+    print(medicines)
+    return render(request,"medicines.html",{'medicines':medicines})
+
+# def cart(request):
+#     cart = request.session.get('cart',{})
+#     cart_items=[]
+#     total_price=0
+#     for medicine_id,quantity in cart.items():
+#         medicine=get_object_or_404(Upload,id=medicine_id)
+#     return render(request,"cart.html",)
