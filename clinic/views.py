@@ -16,6 +16,8 @@ from django.utils import timezone
 from django.urls import reverse
 from django.contrib.sites.shortcuts import get_current_site
 from datetime import timedelta
+from django.shortcuts import get_object_or_404
+
 
 
 # Create your views here.
@@ -90,7 +92,7 @@ def forgotpassword(request):
     if  request.method == 'POST':
         email=request.POST.get('email')
         try:
-            user=User.objects.get(email='email')
+            user = User.objects.get(email=email)
         except User.DoesNotExist:
             messages.error(request,"User does not exist")
             return redirect('forgotpassword')
@@ -125,7 +127,7 @@ def forgotpassword(request):
         
     return render(request,'forgotpassword.html')
 def resetpassword(request, uidb64, token):
-    # Check if the link has expired
+    # Check if the reset link has expired
     expiration_time = request.session.get('reset_link_expiration')
     if expiration_time:
         if timezone.now() > timezone.datetime.fromisoformat(expiration_time):
@@ -133,24 +135,29 @@ def resetpassword(request, uidb64, token):
             return redirect('forgotpassword')
 
     try:
-        uid = urlsafe_base64_decode(uidb64).decode()
+        uid = urlsafe_base64_decode(uidb64).decode()  # Decode the user ID
         user = User.objects.get(pk=uid)
     except (TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
 
     if user is not None and token_generator.check_token(user, token):
         if request.method == 'POST':
-            newpassword=request.POST.get('newpassword')
-            confirmpassword=request.POST.get('confirmpassword')
-            if newpassword==confirmpassword:
+            newpassword = request.POST.get('newpassword')
+            confirmpassword = request.POST.get('confirmpassword')
+
+            if newpassword == confirmpassword:
+                # Set and save the new password
                 user.set_password(newpassword)
                 user.save()
+                messages.success(request, "Your password has been reset successfully.")
                 return redirect('signin')
-            messages.success(request, "Your password has been reset successfully.")
-            return redirect('signin')
-        return render(request, 'resetpassword.html') 
+            else:
+                messages.error(request, "Passwords do not match. Please try again.")
+                return redirect('resetpassword', uidb64=uidb64, token=token)
+
+        return render(request, 'resetpassword.html')
     else:
-        messages.error(request, "The reset link is invalid.")
+        messages.error(request, "The reset link is invalid or has expired.")
         return redirect('forgotpassword')
     
 def signout(request):
@@ -175,10 +182,32 @@ def medicines(request):
     print(medicines)
     return render(request,"medicines.html",{'medicines':medicines})
 
-# def cart(request):
-#     cart = request.session.get('cart',{})
-#     cart_items=[]
-#     total_price=0
-#     for medicine_id,quantity in cart.items():
-#         medicine=get_object_or_404(Upload,id=medicine_id)
-#     return render(request,"cart.html",)
+# Cart view to display items in the cart
+def cart(request):
+    cart = request.session.get('cart', {})  # Get cart from session (default to empty dict)
+    cart_items = []
+    total_price = 0
+
+    for medicine_id, quantity in cart.items():
+        medicine_price=1
+        medicine = get_object_or_404(Upload, id=medicine_id)
+        total_price += medicine_price * quantity
+        cart_items.append({
+            'medicine': medicine,
+            'quantity': quantity,
+            'total_price': medicine_price * quantity
+        })
+    
+    return render(request, "cart.html", {'cart_items': cart_items, 'total_price': total_price})
+
+# Function to add an item to the cart
+def add_to_cart(request, medicine_id):
+    cart = request.session.get('cart', {})
+
+    if str(medicine_id) in cart:
+        cart[str(medicine_id)] += 1  # Increase quantity if already in cart
+    else:
+        cart[str(medicine_id)] = 1  # Add new item with quantity 1
+    
+    request.session['cart'] = cart  # Update session with cart
+    return redirect('cart')  # Redirect to the cart page

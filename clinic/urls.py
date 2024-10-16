@@ -12,4 +12,6 @@ urlpatterns = [
     path('resetpassword/<uidb64>/<token>/', resetpassword, name='resetpassword'),
     path('upload/',upload,name="upload"),
     path('medicines/',medicines,name="medicines"),
+        path('cart/', cart, name='cart'),
+    path('add_to_cart/<int:medicine_id>/',add_to_cart, name='add_to_cart'),
 ]

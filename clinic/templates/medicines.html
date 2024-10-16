@@ -15,7 +15,16 @@ Medicines
                     <p>Description: {{ medicine.medicine_description }}</p>
                     <img src="{{ medicine.image_url}}" alt="{{medicine_image.label}}">
                     <p>Price: {{ medicine.medicine_price }}</p>
-                    <button class="add-to-cart">Add to Cart</button>
+                    {% if medicine.availability %}
+                        <p>Available: <span class="availability">In Stock</span></p>
+                      {% else %}
+                        <p>Available: <span class="availability">Out of Stock</span></p>
+                    {% endif %}
+                <!-- Add to Cart Button -->
+                <form action="{% url 'add_to_cart' medicine.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="add-to-cart">Add to Cart</button>
+                </form>
                 </div>
                 {% endfor %}
             </div>
