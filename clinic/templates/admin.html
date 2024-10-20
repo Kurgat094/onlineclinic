@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Admin Panel
+{% endblock %}
+
+
+{% block content %}
+<form action="" method="post">
+    <div class="container">
+        <div class="signup">
+            <div class="card">
+                <h2>Sign Up</h2>
+                {% if form.errors %} 
+                    {% for key,error in form.errors.items %}
+                        <p style="color: red;">{{error}}</p>
+                    {% endfor %}
+                {% endif %}
+                {% csrf_token %}
+                {{ form.username.label }}
+                {{form.username}}
+                {{form.email.label}}
+                {{form.email}}
+                {{form.role.label}}
+                {{form.role}}
+                {{form.password.label}}
+                {{form.password}}
+                {{form.password_confirmation.label}}
+                {{form.password_confirmation}
+                <input type="Submit" value="Register" id="button" class="btn btn-success">
+                <a href="{% url 'signin' %}">Already have an account? Login</a>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock %}

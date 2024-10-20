@@ -17,7 +17,7 @@ from django.urls import reverse
 from django.contrib.sites.shortcuts import get_current_site
 from datetime import timedelta
 from django.shortcuts import get_object_or_404
-
+from .cart import Cart
 
 
 # Create your views here.
@@ -211,3 +211,10 @@ def add_to_cart(request, medicine_id):
     
     request.session['cart'] = cart  # Update session with cart
     return redirect('cart')  # Redirect to the cart page
+
+def cart_add(self, cart):
+    cart=Cart(request.POST)
+
+def admin(request):
+    
+    return render(request,"admin.html")
